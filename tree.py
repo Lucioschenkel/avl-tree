@@ -15,10 +15,18 @@ class Node():
             if self.right == None:
                 self.right = n
             else:
-                self.right.add(n)    
+                self.right.add(n)
 
+    def print(self):
+        if self.left != None:
+            self.left.print()
+            
+        print(self.v)
 
-class Tree():
+        if self.right != None:
+            self.right.print()
+
+class AVLTree():
 
     """
         Adicionar elementos na árvore (método add);
@@ -41,11 +49,12 @@ class Tree():
         n = Node(v)
         if self.root == None:
             self.root = n
+            self.node_count = self.node_count + 1
         else:
-            self.root.add(n)
+            insert = self.root.add(n)
 
-        self.node_count = self.node_count + 1        
-        pass
+            if insert == True:
+                self.node_count = self.node_count + 1
 
     def get_parent(self, v):
         pass
@@ -76,3 +85,6 @@ class Tree():
 
     def positions_width(self):
         pass
+
+    def print_tree(self):
+        self.root.print()

@@ -1,6 +1,6 @@
 import unittest
 
-class TestTree(unittest.TestCase):
+class TestAVLTree(unittest.TestCase):
 
     def test_add(self):
         pass
