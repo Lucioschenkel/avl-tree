@@ -286,6 +286,7 @@ class AVLTree():
     def positions_width(self):
         q = PriorityQueue()
         idx = 0
+        # Workaround because it is not possible to add objects to the tuple added to the queue
         q.put((idx, self.root.v, self.root.left, self.root.right))
 
         while not q.empty():
@@ -295,7 +296,9 @@ class AVLTree():
             idx += 1
 
             if n[2] != None:
+                # Workaround because it is not possible to add objects to the tuple added to the queue
                 q.put((idx, n[2].v, n[2].left, n[2].right))
             
             if n[3] != None:
+                # Workaround because it is not possible to add objects to the tuple added to the queue
                 q.put((idx, n[3].v, n[3].left, n[3].right))
