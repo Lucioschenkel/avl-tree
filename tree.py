@@ -1,3 +1,5 @@
+from queue import PriorityQueue
+
 class Node():
 
     def __init__(self, v):
@@ -8,18 +10,6 @@ class Node():
         self.height = 1
 
 class AVLTree():
-
-    """
-        Adicionar elementos na árvore (método add);
-        • Retornar o pai de um elemento (método getParent);
-        • Verificar se um elemento está armazenado na árvore ou não (método contains);
-        • Verificar qual é a altura da árvore (método height);
-        • Verificar se a árvore está balanceada ou não (método isBalanced);
-        • Verificar quantos elementos tem na árvore (método size);
-        • Verificar se a árvore está vazia ou não (método isEmpty);
-        • Retornar os elementos da árvore em uma lista usando diferentes caminhamentos (métodos
-        positionsPre, positionsCentral, positionsPos e positionsWidth).
-    """
 
     def __init__(self):
         self.root = None
@@ -226,20 +216,18 @@ class AVLTree():
         return max(left_height,right_height)
 
     def is_balanced(self, root): 
-        # Base condition 
         if root is None: 
             return True
     
-        # for left and right subtree height 
+        # left and right heights
         lh = self.get_height(root.left) 
         rh = self.get_height(root.right) 
     
-        # allowed values for (lh - rh) are 1, -1, 0 
+        # if the absolute difference between left and right's heights is smaller or equal to 1, is balanced
         if (abs(lh - rh) <= 1) and self.is_balanced(root.left) is True and self.is_balanced(root.right) is True: 
             return True
     
-        # if we reach here means tree is not  
-        # height-balanced tree 
+        # Tree is unbalanced
         return False
 
     def size(self):
@@ -249,16 +237,65 @@ class AVLTree():
         return self.size() == 0
 
     def positions_pre(self):
-        pass
+        if self.root == None:
+            raise Exception('Tree is empty!')
+        self._positions_pre(self.root)
+
+    def _positions_pre(self, curr_node):
+        if curr_node != None:
+            print(curr_node.v)
+            if curr_node.left != None:
+                self._positions_pre(curr_node.left)
+            
+            if curr_node.right != None:
+                self._positions_pre(curr_node.right)
 
     def positions_central(self):
-        pass
+        if self.root == None:
+            raise Exception('Tree is empty!')
+
+        self._positions_central(self.root)
+
+    def _positions_central(self, curr_node):
+        if curr_node != None:
+            if curr_node.left != None:
+                self._positions_central(curr_node.left)
+
+            print(curr_node.v)
+
+            if curr_node.right != None:
+                self._positions_central(curr_node.right)
+
 
     def positions_pos(self):
-        pass
+        if self.root == None:
+            raise Exception('Tree is empty!')
+
+        self._positions_pos(self.root)
+
+    def _positions_pos(self, curr_node):
+        if curr_node != None:
+            if curr_node.left != None:
+                self._positions_pos(curr_node.left)
+            
+            if curr_node.right != None:
+                self._positions_pos(curr_node.right)
+            
+            print(curr_node.v)
 
     def positions_width(self):
-        pass
+        q = PriorityQueue()
+        idx = 0
+        q.put((idx, self.root.v, self.root.left, self.root.right))
 
-    def print_tree(self):
-        self.root.print()
+        while not q.empty():
+            n = q.get()
+
+            print(n[1])
+            idx += 1
+
+            if n[2] != None:
+                q.put((idx, n[2].v, n[2].left, n[2].right))
+            
+            if n[3] != None:
+                q.put((idx, n[3].v, n[3].left, n[3].right))

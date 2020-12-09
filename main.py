@@ -17,3 +17,4 @@ print(tr.size())
 print(tr.is_balanced(tr.root))
 
 print(tr)
+print(tr.positions_central())
